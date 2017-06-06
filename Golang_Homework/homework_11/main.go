@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+
+	"github.com/bitly/go-simplejson"
 )
 
 func main() {
@@ -20,9 +22,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("All data is ", len(result.Result.StationID))
 
-	for _, v := range result.Result.StationID {
-		fmt.Println(v)
+	log.Println("All data is ", len(result))
+
+	for i, v := range result {
+		fmt.Println("No", i, " :", v)
 	}
+
+	js, err := simplejson.NewJson(body)
+	fmt.Println(js.Get("StationID").String())
 }
